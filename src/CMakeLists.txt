@@ -10,3 +10,8 @@ target_link_libraries(rottennoodlessmuggler
     ${MAGNUM_LIBRARIES}
     ${MAGNUM_SCENEGRAPH_LIBRARIES}
     ${MAGNUM_APPLICATION_LIBRARIES})
+
+if(CORRADE_TARGET_EMSCRIPTEN)
+    install(TARGETS rottennoodlessmuggler DESTINATION ${CMAKE_INSTALL_PREFIX})
+    install(FILES index.html EmscriptenApplication.js WebApplication.css DESTINATION ${CMAKE_INSTALL_PREFIX})
+endif()
