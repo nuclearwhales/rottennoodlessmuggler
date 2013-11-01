@@ -19,6 +19,7 @@ corrade_add_resource(Rotten_RESOURCES ../artwork/textures.conf)
 set(Rotten_SRCS
     Application.cpp
     GameScreen.cpp
+    Sprite.cpp
     TextureLoader.cpp
     ${Rotten_RESOURCES})
 
