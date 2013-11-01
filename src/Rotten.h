@@ -12,7 +12,7 @@ using namespace Magnum;
 typedef SceneGraph::Object<SceneGraph::TranslationTransformation2D> Object2D;
 typedef SceneGraph::Scene<SceneGraph::TranslationTransformation2D> Scene2D;
 
-typedef ResourceManager<Buffer, Mesh, Texture2D, AbstractShaderProgram, Trade::AbstractImporter> Manager;
+typedef ResourceManager<Buffer, Framebuffer, Mesh, Texture2D, AbstractShaderProgram, Trade::AbstractImporter> Manager;
 
 }
 

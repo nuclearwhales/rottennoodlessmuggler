@@ -12,6 +12,8 @@
 
 namespace Rotten {
 
+class ColoringCamera;
+
 class GameScreen: public Platform::Screen {
     public:
         explicit GameScreen();
@@ -24,7 +26,7 @@ class GameScreen: public Platform::Screen {
 
         Scene2D scene;
         Object2D* cameraObject;
-        SceneGraph::Camera2D* camera;
+        ColoringCamera* camera;
         SceneGraph::DrawableGroup2D drawables;
 };
 

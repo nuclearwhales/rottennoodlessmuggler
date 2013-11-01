@@ -1,6 +1,7 @@
 #include <Platform/Sdl2Application.h>
 #include <Platform/ScreenedApplication.h>
 #include <DefaultFramebuffer.h>
+#include <Framebuffer.h>
 #include <Mesh.h>
 #include <ResourceManager.h>
 #include <Texture.h>
@@ -12,6 +13,7 @@
 
 #include "GameScreen.h"
 #include "TextureLoader.h"
+#include "ColoringCamera.h"
 
 #include "configure.h"
 
@@ -69,6 +71,9 @@ Application::Application(const Arguments& arguments): Platform::ScreenedApplicat
         .set<AbstractShaderProgram>("flat-textured", new Shaders::Flat2D(Shaders::Flat2D::Flag::Textured))
         .set("square-buffer", squareBuffer)
         .set("square", squareMesh);
+
+    /* Prepare coloring camera */
+    ColoringCamera::setup();
 
     /* Screens */
     gameScreen.reset(new GameScreen);

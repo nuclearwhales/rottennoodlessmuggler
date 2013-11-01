@@ -14,14 +14,17 @@ include_directories(${MAGNUM_INCLUDE_DIRS}
     ${MAGNUM_APPLICATION_INCLUDE_DIRS}
     ${CMAKE_CURRENT_BINARY_DIR})
 
-corrade_add_resource(Rotten_RESOURCES ../artwork/textures.conf)
+corrade_add_resource(Rotten_Textures_RCS ../artwork/textures.conf)
+corrade_add_resource(Rotten_Shaders_RCS shaders.conf)
 
 set(Rotten_SRCS
     Application.cpp
+    ColoringCamera.cpp
     GameScreen.cpp
     Sprite.cpp
     TextureLoader.cpp
-    ${Rotten_RESOURCES})
+    ${Rotten_Textures_RCS}
+    ${Rotten_Shaders_RCS})
 
 add_executable(rottennoodlessmuggler ${Rotten_SRCS})
 target_link_libraries(rottennoodlessmuggler
