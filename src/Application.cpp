@@ -1,49 +1,33 @@
 #include <Platform/Sdl2Application.h>
+#include <Platform/ScreenedApplication.h>
 #include <DefaultFramebuffer.h>
-#include <SceneGraph/Scene.h>
-#include <SceneGraph/TranslationTransformation.h>
-#include <SceneGraph/Camera2D.h>
-#include <SceneGraph/Drawable.h>
 
-#include "Rotten.h"
+#include "GameScreen.h"
 
 namespace Rotten {
 
-class Application: public Platform::Application {
+class Application: public Platform::ScreenedApplication {
     public:
         explicit Application(const Arguments& arguments);
 
     protected:
-        void viewportEvent(const Vector2i& size) override;
-        void drawEvent() override;
+        void globalViewportEvent(const Vector2i& size) override;
+        void globalDrawEvent() override;
 
-    private:
-        Scene2D scene;
-        Object2D* cameraObject;
-        SceneGraph::Camera2D* camera;
-        SceneGraph::DrawableGroup2D drawables;
+        GameScreen gameScreen;
 };
 
-Application::Application(const Arguments& arguments): Platform::Application(arguments,
+Application::Application(const Arguments& arguments): Platform::ScreenedApplication(arguments,
     Configuration().setSize(Vector2i(160, 144)*4).setTitle("ROTTEN NOODLES SMUGGLER"))
 {
-    /* Configure camera */
-    cameraObject = new Object2D(&scene);
-    camera = new SceneGraph::Camera2D(*cameraObject);
-    camera->setProjection({160.0f, 144.0f})
-        .setViewport(defaultFramebuffer.viewport().size());
+    addScreen(gameScreen);
 }
 
-void Application::viewportEvent(const Vector2i& size) {
+void Application::globalViewportEvent(const Vector2i& size) {
     defaultFramebuffer.setViewport({{}, size});
-    camera->setViewport(size);
 }
 
-void Application::drawEvent() {
-    defaultFramebuffer.clear(FramebufferClear::Color);
-
-    camera->draw(drawables);
-
+void Application::globalDrawEvent() {
     swapBuffers();
 }
 
