@@ -1,12 +1,16 @@
 #include "GameScreen.h"
 
+#include <Color.h>
 #include <DefaultFramebuffer.h>
+#include <Renderer.h>
 
 #include "ColoringCamera.h"
 
 namespace Rotten {
 
 GameScreen::GameScreen() {
+    Renderer::setClearColor(Color3(0.66f));
+
     /* Configure camera */
     cameraObject = new Object2D(&scene);
     camera = new ColoringCamera(*cameraObject);
