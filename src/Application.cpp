@@ -5,10 +5,9 @@
 #include <SceneGraph/Camera2D.h>
 #include <SceneGraph/Drawable.h>
 
-using namespace Magnum;
+#include "Rotten.h"
 
-typedef SceneGraph::Object<SceneGraph::TranslationTransformation2D> Object2D;
-typedef SceneGraph::Scene<SceneGraph::TranslationTransformation2D> Scene2D;
+namespace Rotten {
 
 class Application: public Platform::Application {
     public:
@@ -48,4 +47,6 @@ void Application::drawEvent() {
     swapBuffers();
 }
 
-MAGNUM_APPLICATION_MAIN(Application)
+}
+
+MAGNUM_APPLICATION_MAIN(Rotten::Application)
