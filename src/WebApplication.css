@@ -17,7 +17,7 @@ h1 {
     border-width: 1px;
     padding: 1px;
     width: 640px;
-    height: 480px;
+    height: 576px;
     margin-left: auto;
     margin-right: auto;
     margin-top: 20px;
@@ -27,7 +27,7 @@ h1 {
 
 #module {
     width: 640px;
-    height: 480px;
+    height: 576px;
     z-index: 10;
 }
 
