@@ -5,6 +5,7 @@
 #include <Renderer.h>
 
 #include "ColoringCamera.h"
+#include "Sprite.h"
 
 namespace Rotten {
 
@@ -16,6 +17,11 @@ GameScreen::GameScreen() {
     camera = new ColoringCamera(*cameraObject);
     camera->setProjection({160.0f, 144.0f})
         .setViewport(defaultFramebuffer.viewport().size());
+
+    /* Add some stuff */
+    (new Sprite(Vector2i(20), "box", &scene, &drawables))->translate({-40, -10});
+    (new Sprite(Vector2i(20), "mess", &scene, &drawables))->translate({0, 30});
+    (new Sprite(Vector2i(20), "strongbox", &scene, &drawables))->translate({40, -10});
 }
 
 void GameScreen::focusEvent() {
