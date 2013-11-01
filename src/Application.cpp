@@ -15,6 +15,17 @@
 
 #include "configure.h"
 
+#ifdef MAGNUM_BUILD_STATIC
+/* Import shader resources in static build */
+#include <Shaders/magnumShadersResourceImport.hpp>
+
+/* Import plugins in static build */
+static int importStaticPlugins() {
+    CORRADE_PLUGIN_IMPORT(TgaImporter)
+    return 0;
+} CORRADE_AUTOMATIC_INITIALIZER(importStaticPlugins)
+#endif
+
 namespace Rotten {
 
 class Application: public Platform::ScreenedApplication {
