@@ -10,8 +10,8 @@ namespace Rotten {
 
 using namespace Magnum;
 
-typedef SceneGraph::Object<SceneGraph::TranslationTransformation2D> Object2D;
-typedef SceneGraph::Scene<SceneGraph::TranslationTransformation2D> Scene2D;
+typedef SceneGraph::Object<SceneGraph::BasicTranslationTransformation2D<Float, Int>> Object2D;
+typedef SceneGraph::Scene<SceneGraph::BasicTranslationTransformation2D<Float, Int>> Scene2D;
 
 typedef ResourceManager<Buffer, Framebuffer, Mesh, Texture2D, AbstractShaderProgram, Trade::AbstractImporter, Text::AbstractFont, Text::GlyphCache> Manager;
 

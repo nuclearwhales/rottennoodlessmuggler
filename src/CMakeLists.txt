@@ -23,6 +23,7 @@ set(Rotten_SRCS
     Application.cpp
     ColoringCamera.cpp
     GameScreen.cpp
+    Rotten.cpp
     Sprite.cpp
     TextureLoader.cpp
     ${Rotten_Fonts_RCS}
