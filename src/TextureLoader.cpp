@@ -25,16 +25,27 @@ void TextureLoader::doLoad(ResourceKey key) {
     if(found == names.end()) return setNotFound(key);
 
     Utility::Resource rs("textures");
-    if(!tgaImporter->openData(rs.getRaw(found->second + ".tga"))) return setNotFound(key);
+    if(!tgaImporter->openData(rs.getRaw(found->second + ".tga"))) {
+        Error() << "TextureLoader: cannot open" << found->second;
+        return setNotFound(key);
+    }
 
     auto image = tgaImporter->image2D(0);
-    if(!image) return setNotFound(key);
+    if(!image) {
+        Error() << "TextureLoader: cannot load" << found->second;
+        return setNotFound(key);
+    }
 
     auto texture = new Texture2D;
     texture->setMinificationFilter(Sampler::Filter::Nearest)
         .setMagnificationFilter(Sampler::Filter::Nearest)
-        .setWrapping(Sampler::Wrapping::ClampToEdge)
-        .setImage(0, TextureFormat::RGB, *image);
+        .setWrapping(Sampler::Wrapping::ClampToEdge);
+
+    #ifndef MAGNUM_TARGET_GLES
+    texture->setImage(0, TextureFormat::RGB, *image);
+    #else
+    texture->setImage(0, TextureFormat::Luminance, *image);
+    #endif
 
     set(key, texture);
 }
