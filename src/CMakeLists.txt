@@ -2,8 +2,8 @@ find_package(Magnum REQUIRED
     MeshTools
     Primitives
     SceneGraph
-    Sdl2Application
-    Shaders)
+    Shaders
+    Sdl2Application)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CORRADE_CXX_FLAGS}")
 
@@ -14,8 +14,8 @@ include_directories(${MAGNUM_INCLUDE_DIRS}
     ${MAGNUM_APPLICATION_INCLUDE_DIRS}
     ${CMAKE_CURRENT_BINARY_DIR})
 
-corrade_add_resource(Rotten_Textures_RCS ../artwork/textures.conf)
 corrade_add_resource(Rotten_Shaders_RCS shaders.conf)
+corrade_add_resource(Rotten_Textures_RCS ../artwork/textures.conf)
 
 set(Rotten_SRCS
     Application.cpp
@@ -23,8 +23,8 @@ set(Rotten_SRCS
     GameScreen.cpp
     Sprite.cpp
     TextureLoader.cpp
-    ${Rotten_Textures_RCS}
-    ${Rotten_Shaders_RCS})
+    ${Rotten_Shaders_RCS}
+    ${Rotten_Textures_RCS})
 
 add_executable(rottennoodlessmuggler ${Rotten_SRCS})
 target_link_libraries(rottennoodlessmuggler

@@ -1,3 +1,4 @@
+#include <PluginManager/Manager.h>
 #include <Platform/Sdl2Application.h>
 #include <Platform/ScreenedApplication.h>
 #include <DefaultFramebuffer.h>
@@ -9,7 +10,6 @@
 #include <Primitives/Square.h>
 #include <Shaders/Flat.h>
 #include <Trade/MeshData2D.h>
-#include <PluginManager/Manager.h>
 
 #include "GameScreen.h"
 #include "TextureLoader.h"
@@ -46,14 +46,11 @@ class Application: public Platform::ScreenedApplication {
 Application::Application(const Arguments& arguments): Platform::ScreenedApplication(arguments,
     Configuration().setSize(Vector2i(160, 144)*4).setTitle("ROTTEN NOODLES SMUGGLER")), importerManager(ROTTEN_PLUGINS_IMPORTER_DIR)
 {
-    /* Load TGA importer */
-    if(!(importerManager.load("TgaImporter") & PluginManager::LoadState::Loaded)) {
+    /* Load TGA importer plugin */
+    std::unique_ptr<Trade::AbstractImporter> tgaImporter;
+    if(!(importerManager.load("TgaImporter") & PluginManager::LoadState::Loaded) ||
+       !(tgaImporter = importerManager.instance("TgaImporter"))) {
         Error() << "Cannot load TgaImporter plugin";
-        std::exit(1);
-    }
-    auto tgaImporter = importerManager.instance("TgaImporter");
-    if(!tgaImporter) {
-        Error() << "Cannot instantiate TgaImporter plugin";
         std::exit(1);
     }
 
