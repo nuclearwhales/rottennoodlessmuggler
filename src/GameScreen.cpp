@@ -6,6 +6,7 @@
 
 #include "ColoringCamera.h"
 #include "Sprite.h"
+#include "TextSprite.h"
 
 namespace Rotten {
 
@@ -22,6 +23,7 @@ GameScreen::GameScreen() {
     (new Sprite(Vector2i(20), "box", &scene, &drawables))->translate({-40, -10});
     (new Sprite(Vector2i(20), "mess", &scene, &drawables))->translate({0, 30});
     (new Sprite(Vector2i(20), "strongbox", &scene, &drawables))->translate({40, -10});
+    (new TextSprite("hellou peeple", &scene, &drawables))->translate({0, -40});
 }
 
 void GameScreen::focusEvent() {
