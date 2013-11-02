@@ -26,6 +26,7 @@ set(Rotten_SRCS
     Rotten.cpp
     Sprite.cpp
     TextureLoader.cpp
+    TextSprite.cpp
     ${Rotten_Fonts_RCS}
     ${Rotten_Shaders_RCS}
     ${Rotten_Textures_RCS})
