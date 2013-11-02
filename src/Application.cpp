@@ -9,6 +9,9 @@
 #include <MeshTools/Interleave.h>
 #include <Primitives/Square.h>
 #include <Shaders/Flat.h>
+#include <Shaders/Vector.h>
+#include <Text/AbstractFont.h>
+#include <Text/GlyphCache.h>
 #include <Trade/MeshData2D.h>
 
 #include "GameScreen.h"
@@ -39,12 +42,13 @@ class Application: public Platform::ScreenedApplication {
         void globalDrawEvent() override;
 
         PluginManager::Manager<Trade::AbstractImporter> importerManager;
+        PluginManager::Manager<Text::AbstractFont> fontManager;
         Manager resourceManager;
         std::unique_ptr<GameScreen> gameScreen;
 };
 
 Application::Application(const Arguments& arguments): Platform::ScreenedApplication(arguments,
-    Configuration().setSize(Vector2i(160, 144)*4).setTitle("ROTTEN NOODLES SMUGGLER")), importerManager(ROTTEN_PLUGINS_IMPORTER_DIR)
+    Configuration().setSize(Vector2i(160, 144)*4).setTitle("ROTTEN NOODLES SMUGGLER")), importerManager(ROTTEN_PLUGINS_IMPORTER_DIR), fontManager(ROTTEN_PLUGINS_FONT_DIR)
 {
     /* Load TGA importer plugin */
     std::unique_ptr<Trade::AbstractImporter> tgaImporter;
@@ -62,10 +66,31 @@ Application::Application(const Arguments& arguments): Platform::ScreenedApplicat
     squareMesh->setPrimitive(squareData.primitive())
         .addVertexBuffer(*squareBuffer, 0, Shaders::Flat2D::Position(), Shaders::Flat2D::TextureCoordinates());
 
+    /* Load font plugin */
+    std::unique_ptr<Text::AbstractFont> font;
+    if(!(fontManager.load("MagnumFont") & PluginManager::LoadState::Loaded) ||
+       !(font = fontManager.instance("MagnumFont"))) {
+        Error() << "Cannot load MagnumFont plugin";
+        std::exit(1);
+    }
+
+    /* Open font, fill glyph cache */
+    Utility::Resource rs("fonts");
+    if(!font->openData({{"font.conf", rs.getRaw("font.conf")}, {"font.tga", rs.getRaw("font.tga")}}, 0.0f)) {
+        Error() << "Cannot open font";
+        std::exit(1);
+    }
+    auto glyphCache = font->createGlyphCache();
+    glyphCache->texture().setMinificationFilter(Sampler::Filter::Nearest)
+        .setMagnificationFilter(Sampler::Filter::Nearest);
+
     /* Fill the manager with data */
     resourceManager.setLoader(new TextureLoader)
         .set("tga-importer", tgaImporter.release())
+        .set("font", font.release())
+        .set("glyph-cache", glyphCache.release())
         .set<AbstractShaderProgram>("flat-textured", new Shaders::Flat2D(Shaders::Flat2D::Flag::Textured))
+        .set<AbstractShaderProgram>("text", new Shaders::Vector2D)
         .set("square-buffer", squareBuffer)
         .set("square", squareMesh);
 

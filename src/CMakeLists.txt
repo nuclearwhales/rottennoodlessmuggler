@@ -3,6 +3,7 @@ find_package(Magnum REQUIRED
     Primitives
     SceneGraph
     Shaders
+    Text
     Sdl2Application)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CORRADE_CXX_FLAGS}")
@@ -14,6 +15,7 @@ include_directories(${MAGNUM_INCLUDE_DIRS}
     ${MAGNUM_APPLICATION_INCLUDE_DIRS}
     ${CMAKE_CURRENT_BINARY_DIR})
 
+corrade_add_resource(Rotten_Fonts_RCS ../artwork/fonts.conf)
 corrade_add_resource(Rotten_Shaders_RCS shaders.conf)
 corrade_add_resource(Rotten_Textures_RCS ../artwork/textures.conf)
 
@@ -23,6 +25,7 @@ set(Rotten_SRCS
     GameScreen.cpp
     Sprite.cpp
     TextureLoader.cpp
+    ${Rotten_Fonts_RCS}
     ${Rotten_Shaders_RCS}
     ${Rotten_Textures_RCS})
 
@@ -32,6 +35,7 @@ target_link_libraries(rottennoodlessmuggler
     ${MAGNUM_PRIMITIVES_LIBRARIES}
     ${MAGNUM_SCENEGRAPH_LIBRARIES}
     ${MAGNUM_SHADERS_LIBRARIES}
+    ${MAGNUM_TEXT_LIBRARIES}
     ${MAGNUM_APPLICATION_LIBRARIES})
 
 if(CORRADE_TARGET_EMSCRIPTEN)
