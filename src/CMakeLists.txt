@@ -15,6 +15,7 @@ include_directories(${MAGNUM_INCLUDE_DIRS}
     ${MAGNUM_APPLICATION_INCLUDE_DIRS}
     ${CMAKE_CURRENT_BINARY_DIR})
 
+corrade_add_resource(Rotten_Data_SRCS ../data/resources-data.conf)
 corrade_add_resource(Rotten_Fonts_RCS ../data/resources-fonts.conf)
 corrade_add_resource(Rotten_Shaders_RCS resources-shaders.conf)
 corrade_add_resource(Rotten_Textures_RCS ../data/resources-textures.conf)
@@ -22,13 +23,17 @@ corrade_add_resource(Rotten_Textures_RCS ../data/resources-textures.conf)
 set(Rotten_SRCS
     Application.cpp
     ColoringCamera.cpp
+    Dumpster.cpp
     GameScreen.cpp
+    Item.cpp
     MutableTextSprite.cpp
     Rotten.cpp
     SplashScreen.cpp
     Sprite.cpp
     TextureLoader.cpp
     TextSprite.cpp
+
+    ${Rotten_Data_SRCS}
     ${Rotten_Fonts_RCS}
     ${Rotten_Shaders_RCS}
     ${Rotten_Textures_RCS})
