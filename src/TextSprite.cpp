@@ -8,7 +8,7 @@
 
 namespace Rotten {
 
-TextSprite::TextSprite(const std::string& text, Object2D* parent, SceneGraph::DrawableGroup2D* drawables): Object2D(parent), SceneGraph::Drawable2D(*this, drawables) {
+TextSprite::TextSprite(const std::string& text, Object2D* parent, SceneGraph::DrawableGroup2D* drawables): Object2D(parent), SceneGraph::Drawable2D(*this, drawables), _indexBuffer(Buffer::Target::ElementArray), _vertexBuffer(Buffer::Target::Array) {
     auto font = Manager::instance().get<Text::AbstractFont>("font");
     _glyphCache = Manager::instance().get<Text::GlyphCache>("glyph-cache");
     _shader = Manager::instance().get<AbstractShaderProgram, Shaders::Vector2D>("text");
