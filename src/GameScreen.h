@@ -1,19 +1,19 @@
 #ifndef Rotten_GameScreen_h
 #define Rotten_GameScreen_h
 
+#include <Interconnect/StateMachine.h>
 #include <Platform/Screen.h>
 #include <Platform/Sdl2Application.h>
 #include <SceneGraph/Scene.h>
 #include <SceneGraph/TranslationTransformation.h>
 #include <SceneGraph/Camera2D.h>
 #include <SceneGraph/Drawable.h>
-#include <Corrade/Interconnect/StateMachine.h>
 
 #include "Rotten.h"
 
 namespace Rotten {
 
-enum class State: std::uint8_t {
+enum class State: UnsignedByte {
     Center,
     Left,
     Right,
@@ -22,7 +22,7 @@ enum class State: std::uint8_t {
     RightWithItem
 };
 
-enum class Input: std::uint8_t {
+enum class Input: UnsignedByte {
     LeftKey,
     RightKey,
     ActionKey
