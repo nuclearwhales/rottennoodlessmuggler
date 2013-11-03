@@ -23,6 +23,7 @@ set(Rotten_SRCS
     Application.cpp
     ColoringCamera.cpp
     GameScreen.cpp
+    MutableTextSprite.cpp
     Rotten.cpp
     SplashScreen.cpp
     Sprite.cpp
