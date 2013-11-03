@@ -49,7 +49,7 @@ class GameScreen: public Platform::Screen {
         ColoringCamera* camera;
         SceneGraph::DrawableGroup2D drawables;
         ActionHandler handler;
-        Player player;
+        Player* player;
 };
 
 }

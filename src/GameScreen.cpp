@@ -14,6 +14,8 @@ namespace Rotten {
 GameScreen::GameScreen() {
     Renderer::setClearColor(Color3(0.66f));
 
+    player = new Player(&scene, &drawables);
+
     /* Configure state transitions of StateMachine handling input from player */
     handler.addTransitions({
         {State::Center, Input::LeftKey, State::Left},
@@ -32,19 +34,20 @@ GameScreen::GameScreen() {
         {State::RightWithItem, Input::ActionKey, State::Right} //save item
     });
 
-    Interconnect::connect(handler, &ActionHandler::stepped<State::Center, State::Left>, player, player.goLeft());
-    Interconnect::connect(handler, &ActionHandler::stepped<State::Center, State::Right>, player, player.goRight());
-    Interconnect::connect(handler, &ActionHandler::stepped<State::Center, State::CenterWithItem>, player, player.takeItem());
-    Interconnect::connect(handler, &ActionHandler::stepped<State::CenterWithItem, State::LeftWithItem>, player, player.goLeft());
-    Interconnect::connect(handler, &ActionHandler::stepped<State::CenterWithItem, State::RightWithItem>, player, player.goRight());
-    Interconnect::connect(handler, &ActionHandler::stepped<State::Left, State::Center>, player, player.goRight());
-    Interconnect::connect(handler, &ActionHandler::stepped<State::Left, State::LeftWithItem>, player, player.takeItem());
-    Interconnect::connect(handler, &ActionHandler::stepped<State::LeftWithItem, State::CenterWithItem>, player, player.goRight());
-    Interconnect::connect(handler, &ActionHandler::stepped<State::LeftWithItem, State::Left>, player, player.dropItem());
-    Interconnect::connect(handler, &ActionHandler::stepped<State::Right, State::Center>, player, player.goLeft());
-    Interconnect::connect(handler, &ActionHandler::stepped<State::Right, State::RightWithItem>, player, player.takeItem());
-    Interconnect::connect(handler, &ActionHandler::stepped<State::RightWithItem, State::CenterWithItem>, player, player.goLeft());
-    Interconnect::connect(handler, &ActionHandler::stepped<State::RightWithItem, State::Right>, player, player.saveItem());
+    /* Connect to player */
+    Interconnect::connect(handler, &ActionHandler::stepped<State::Center, State::Left>, *player, &Player::goLeft);
+    Interconnect::connect(handler, &ActionHandler::stepped<State::Center, State::Right>, *player, &Player::goRight);
+    Interconnect::connect(handler, &ActionHandler::stepped<State::Center, State::CenterWithItem>, *player, &Player::takeItem);
+    Interconnect::connect(handler, &ActionHandler::stepped<State::CenterWithItem, State::LeftWithItem>, *player, &Player::goLeft);
+    Interconnect::connect(handler, &ActionHandler::stepped<State::CenterWithItem, State::RightWithItem>, *player, &Player::goRight);
+    Interconnect::connect(handler, &ActionHandler::stepped<State::Left, State::Center>, *player, &Player::goRight);
+    Interconnect::connect(handler, &ActionHandler::stepped<State::Left, State::LeftWithItem>, *player, &Player::takeItem);
+    Interconnect::connect(handler, &ActionHandler::stepped<State::LeftWithItem, State::CenterWithItem>, *player, &Player::goRight);
+    Interconnect::connect(handler, &ActionHandler::stepped<State::LeftWithItem, State::Left>, *player, &Player::dropItem);
+    Interconnect::connect(handler, &ActionHandler::stepped<State::Right, State::Center>, *player, &Player::goLeft);
+    Interconnect::connect(handler, &ActionHandler::stepped<State::Right, State::RightWithItem>, *player, &Player::takeItem);
+    Interconnect::connect(handler, &ActionHandler::stepped<State::RightWithItem, State::CenterWithItem>, *player, &Player::goLeft);
+    Interconnect::connect(handler, &ActionHandler::stepped<State::RightWithItem, State::Right>, *player, &Player::saveItem);
 
     /* Configure camera */
     camera = new ColoringCamera(&scene);
