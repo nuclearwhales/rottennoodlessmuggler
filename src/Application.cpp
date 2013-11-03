@@ -1,10 +1,8 @@
-#include <PluginManager/Manager.h>
-#include <Platform/Sdl2Application.h>
-#include <Platform/ScreenedApplication.h>
+#include "Application.h"
+
 #include <DefaultFramebuffer.h>
 #include <Framebuffer.h>
 #include <Mesh.h>
-#include <ResourceManager.h>
 #include <Texture.h>
 #include <MeshTools/Interleave.h>
 #include <Primitives/Square.h>
@@ -34,21 +32,6 @@ static int importStaticPlugins() {
 #endif
 
 namespace Rotten {
-
-class Application: public Platform::ScreenedApplication {
-    public:
-        explicit Application(const Arguments& arguments);
-
-    protected:
-        void globalViewportEvent(const Vector2i& size) override;
-        void globalDrawEvent() override;
-
-        PluginManager::Manager<Trade::AbstractImporter> importerManager;
-        PluginManager::Manager<Text::AbstractFont> fontManager;
-        Manager resourceManager;
-        std::unique_ptr<GameScreen> gameScreen;
-        std::unique_ptr<SplashScreen> splashScreen;
-};
 
 Application::Application(const Arguments& arguments): Platform::ScreenedApplication(arguments,
     Configuration().setSize(Vector2i(160, 144)*4).setTitle("ROTTEN NOODLES SMUGGLER")), importerManager(ROTTEN_PLUGINS_IMPORTER_DIR), fontManager(ROTTEN_PLUGINS_FONT_DIR)
@@ -101,11 +84,17 @@ Application::Application(const Arguments& arguments): Platform::ScreenedApplicat
     ColoringCamera::setup();
 
     /* Screens */
-    splashScreen.reset(new SplashScreen);
-    addScreen(*splashScreen);
-    gameScreen.reset(new GameScreen);
-    addScreen(*gameScreen);
+    _splashScreen.reset(new SplashScreen);
+    addScreen(*_splashScreen);
+    _gameScreen.reset(new GameScreen);
+    addScreen(*_gameScreen);
 }
+
+Application::~Application() = default;
+
+Platform::Screen& Application::gameScreen() { return *_gameScreen; }
+
+Platform::Screen& Application::splashScreen() { return *_splashScreen; }
 
 void Application::globalViewportEvent(const Vector2i& size) {
     defaultFramebuffer.setViewport({{}, size});
