@@ -42,8 +42,11 @@ target_link_libraries(rottennoodlessmuggler
 
 if(CORRADE_TARGET_EMSCRIPTEN)
     # Statically link the plugins
-    find_package(Magnum REQUIRED TgaImporter)
-    target_link_libraries(rottennoodlessmuggler ${MAGNUM_TGAIMPORTER_LIBRARIES})
+    find_package(Magnum REQUIRED MagnumFont TgaImporter)
+    target_link_libraries(rottennoodlessmuggler
+        ${MAGNUM_MAGNUMFONT_LIBRARIES}
+        ${MAGNUM_TGAIMPORTER_LIBRARIES}
+        ${MAGNUM_LIBRARIES})
 
     install(TARGETS rottennoodlessmuggler DESTINATION ${CMAKE_INSTALL_PREFIX})
     install(FILES index.html EmscriptenApplication.js WebApplication.css DESTINATION ${CMAKE_INSTALL_PREFIX})
