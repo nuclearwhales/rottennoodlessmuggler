@@ -10,9 +10,13 @@
 
 namespace Rotten {
 
-class Sprite: public Object2D, SceneGraph::Drawable2D {
+class Sprite: public Object2D, public SceneGraph::Drawable2D {
     public:
+        explicit Sprite(Object2D* parent, SceneGraph::DrawableGroup2D* drawables = nullptr);
+
         explicit Sprite(const Vector2i& size, const ResourceKey& texture, Object2D* parent, SceneGraph::DrawableGroup2D* drawables = nullptr);
+
+        void reset(const Vector2i& size, const ResourceKey& texture);
 
         ~Sprite();
 
