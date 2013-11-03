@@ -22,6 +22,8 @@ corrade_add_resource(Rotten_Textures_RCS ../data/resources-textures.conf)
 
 set(Rotten_SRCS
     Application.cpp
+    Bag.cpp
+    BagScreen.cpp
     ColoringCamera.cpp
     Dumpster.cpp
     GameScreen.cpp

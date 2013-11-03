@@ -1,51 +1,41 @@
-#ifndef Rotten_GameScreen_h
-#define Rotten_GameScreen_h
+#ifndef Rotten_TradeScreen_h
+#define Rotten_TradeScreen_h
 
-#include <Interconnect/StateMachine.h>
 #include <Platform/Screen.h>
 #include <Platform/Sdl2Application.h>
 #include <SceneGraph/Scene.h>
 #include <SceneGraph/TranslationTransformation.h>
+#include <SceneGraph/Camera2D.h>
 #include <SceneGraph/Drawable.h>
 
 #include "Rotten.h"
 
 namespace Rotten {
 
-enum class State: UnsignedByte {
-    Center,
-    Left,
-    Right,
-    CenterWithItem,
-    LeftWithItem,
-    RightWithItem
-};
-
-enum class Input: UnsignedByte {
-    LeftKey,
-    RightKey,
-    ActionKey
-};
-
-typedef Interconnect::StateMachine<6, 3, State, Input> ActionHandler;
-
+class Bag;
 class ColoringCamera;
+class MutableTextSprite;
 
-class GameScreen: public Platform::Screen {
+class BagScreen: public Platform::Screen {
     public:
-        explicit GameScreen();
+        explicit BagScreen();
 
     private:
         void focusEvent() override;
         void blurEvent() override;
         void viewportEvent(const Vector2i& size) override;
         void drawEvent() override;
-        void keyPressEvent(KeyEvent& event);
+        void keyPressEvent(KeyEvent& event) override;
+
+        void displayItem(Int id);
 
         Scene2D scene;
         ColoringCamera* camera;
         SceneGraph::DrawableGroup2D drawables;
-        ActionHandler handler;
+
+        Bag* _bag;
+        MutableTextSprite *_itemCount, *_currentContents;
+        Int _current;
 };
 
 }

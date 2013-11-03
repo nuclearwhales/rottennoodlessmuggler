@@ -4,6 +4,7 @@
 #include <DefaultFramebuffer.h>
 #include <Renderer.h>
 
+#include "Application.h"
 #include "ColoringCamera.h"
 #include "Sprite.h"
 #include "TextSprite.h"
@@ -38,7 +39,10 @@ GameScreen::GameScreen() {
     (new Sprite(Vector2i(20), "box", &scene, &drawables))->translate({-40, -10});
     (new Sprite(Vector2i(20), "mess", &scene, &drawables))->translate({0, 30});
     (new Sprite(Vector2i(20), "strongbox", &scene, &drawables))->translate({40, -10});
-    (new TextSprite("hellou peeple", &scene, &drawables))->translate({0, -40});
+
+    (new TextSprite("St: SHOW BAG", &scene, &drawables))
+        ->setColor(Color3(0.3f))
+        .translate({30, -67});
 }
 
 void GameScreen::focusEvent() {
@@ -55,6 +59,14 @@ void GameScreen::viewportEvent(const Vector2i& size) {
 
 void GameScreen::drawEvent() {
     camera->draw(drawables);
+}
+
+void GameScreen::keyPressEvent(KeyEvent& event) {
+    if(event.key() == KeyEvent::Key::Enter)
+        application()->focusScreen(application<Application>()->bagScreen());
+    else return;
+
+    event.setAccepted();
 }
 
 }

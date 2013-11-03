@@ -10,6 +10,7 @@
 
 namespace Rotten {
 
+class BagScreen;
 class GameScreen;
 class SplashScreen;
 
@@ -19,6 +20,7 @@ class Application: public Platform::ScreenedApplication {
 
         ~Application();
 
+        Platform::Screen& bagScreen();
         Platform::Screen& gameScreen();
         Platform::Screen& splashScreen();
 

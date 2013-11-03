@@ -12,10 +12,11 @@
 #include <Text/GlyphCache.h>
 #include <Trade/MeshData2D.h>
 
-#include "GameScreen.h"
-#include "TextureLoader.h"
+#include "BagScreen.h"
 #include "ColoringCamera.h"
+#include "GameScreen.h"
 #include "SplashScreen.h"
+#include "TextureLoader.h"
 
 #include "configure.h"
 
@@ -88,9 +89,13 @@ Application::Application(const Arguments& arguments): Platform::ScreenedApplicat
     addScreen(*_splashScreen);
     _gameScreen.reset(new GameScreen);
     addScreen(*_gameScreen);
+    _bagScreen.reset(new BagScreen);
+    addScreen(*_bagScreen);
 }
 
 Application::~Application() = default;
+
+Platform::Screen& Application::bagScreen() { return *_bagScreen; }
 
 Platform::Screen& Application::gameScreen() { return *_gameScreen; }
 
