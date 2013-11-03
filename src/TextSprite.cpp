@@ -13,7 +13,7 @@ TextSprite::TextSprite(const std::string& text, Object2D* parent, SceneGraph::Dr
     _glyphCache = Manager::instance().get<Text::GlyphCache>("glyph-cache");
     _shader = Manager::instance().get<AbstractShaderProgram, Shaders::Vector2D>("text");
 
-    Rectangle rect;
+    Magnum::Rectangle rect; /* WINAPI I hate you. */
     std::tie(_mesh, rect) = Text::TextRenderer2D::render(*font, *_glyphCache, 8.0f, text, _vertexBuffer, _indexBuffer, Buffer::Usage::StaticDraw);
     translate(Vector2i(rect.size())/-2);
 }
