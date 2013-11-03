@@ -7,10 +7,28 @@
 #include <SceneGraph/TranslationTransformation.h>
 #include <SceneGraph/Camera2D.h>
 #include <SceneGraph/Drawable.h>
+#include <Corrade/Interconnect/StateMachine.h>
 
 #include "Rotten.h"
 
 namespace Rotten {
+
+enum class State: std::uint8_t {
+    Center,
+    Left,
+    Right,
+    CenterWithItem,
+    LeftWithItem,
+    RightWithItem
+};
+
+enum class Input: std::uint8_t {
+    LeftKey,
+    RightKey,
+    ActionKey
+};
+
+typedef Interconnect::StateMachine<6, 3, State, Input> ActionHandler;
 
 class ColoringCamera;
 
@@ -28,6 +46,7 @@ class GameScreen: public Platform::Screen {
         Object2D* cameraObject;
         ColoringCamera* camera;
         SceneGraph::DrawableGroup2D drawables;
+        ActionHandler handler;
 };
 
 }
