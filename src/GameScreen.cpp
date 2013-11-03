@@ -79,11 +79,10 @@ void GameScreen::drawEvent() {
 }
 
 void GameScreen::keyPressEvent(KeyEvent& event) {
-    if(event.key() == KeyEvent::Key::Enter)
-        application()->focusScreen(application<Application>()->bagScreen());
-    //else return;
-
     switch(event.key()){
+        case KeyEvent::Key::Enter:
+            application()->focusScreen(application<Application>()->bagScreen());
+            break;
         case KeyEvent::Key::Left:
             handler.step(Input::LeftKey);
             break;
