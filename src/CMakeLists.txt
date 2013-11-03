@@ -34,6 +34,7 @@ set(Rotten_SRCS
 
 add_executable(rottennoodlessmuggler ${Rotten_SRCS})
 target_link_libraries(rottennoodlessmuggler
+    ${CORRADE_INTERCONNECT_LIBRARIES}
     ${MAGNUM_LIBRARIES}
     ${MAGNUM_PRIMITIVES_LIBRARIES}
     ${MAGNUM_SCENEGRAPH_LIBRARIES}
