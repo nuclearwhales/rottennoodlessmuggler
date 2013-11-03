@@ -4,6 +4,7 @@
 #include <DefaultFramebuffer.h>
 #include <Renderer.h>
 
+#include "Application.h"
 #include "ColoringCamera.h"
 #include "TextSprite.h"
 
@@ -33,10 +34,11 @@ void SplashScreen::drawEvent() {
 }
 
 void SplashScreen::keyPressEvent(KeyEvent& event) {
-    if(event.key() == KeyEvent::Key::Enter) {
-        application()->focusScreen(*application()->backScreen());
-        event.setAccepted();
-    }
+    if(event.key() == KeyEvent::Key::Enter)
+        application()->focusScreen(application<Application>()->gameScreen());
+    else return;
+
+    event.setAccepted();
 }
 
 }
