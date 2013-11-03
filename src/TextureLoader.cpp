@@ -2,9 +2,10 @@
 
 #include <Containers/Array.h>
 #include <Utility/Resource.h>
-#include <Trade/ImageData.h>
+#include <ColorFormat.h>
 #include <Texture.h>
 #include <TextureFormat.h>
+#include <Trade/ImageData.h>
 
 namespace Rotten {
 
@@ -36,13 +37,22 @@ void TextureLoader::doLoad(ResourceKey key) {
         return setNotFound(key);
     }
 
+    #ifndef MAGNUM_TARGET_GLES
+    if(image->format() != ColorFormat::Red || image->type() != ColorType::UnsignedByte)
+    #else
+    if(image->format() != ColorFormat::Luminance || image->type() != ColorType::UnsignedByte)
+    #endif
+    {
+        Error() << "TextureLoader: image" << found->second << "isn't in greyscale format";
+    }
+
     auto texture = new Texture2D;
     texture->setMinificationFilter(Sampler::Filter::Nearest)
         .setMagnificationFilter(Sampler::Filter::Nearest)
         .setWrapping(Sampler::Wrapping::ClampToEdge);
 
     #ifndef MAGNUM_TARGET_GLES
-    texture->setImage(0, TextureFormat::RGB, *image);
+    texture->setImage(0, TextureFormat::Red, *image);
     #else
     texture->setImage(0, TextureFormat::Luminance, *image);
     #endif
