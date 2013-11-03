@@ -32,6 +32,20 @@ GameScreen::GameScreen() {
         {State::RightWithItem, Input::ActionKey, State::Right} //save item
     });
 
+    Interconnect::connect(handler, &ActionHandler::stepped<State::Center, State::Left>, player, player.goLeft());
+    Interconnect::connect(handler, &ActionHandler::stepped<State::Center, State::Right>, player, player.goRight());
+    Interconnect::connect(handler, &ActionHandler::stepped<State::Center, State::CenterWithItem>, player, player.takeItem());
+    Interconnect::connect(handler, &ActionHandler::stepped<State::CenterWithItem, State::LeftWithItem>, player, player.goLeft());
+    Interconnect::connect(handler, &ActionHandler::stepped<State::CenterWithItem, State::RightWithItem>, player, player.goRight());
+    Interconnect::connect(handler, &ActionHandler::stepped<State::Left, State::Center>, player, player.goRight());
+    Interconnect::connect(handler, &ActionHandler::stepped<State::Left, State::LeftWithItem>, player, player.takeItem());
+    Interconnect::connect(handler, &ActionHandler::stepped<State::LeftWithItem, State::CenterWithItem>, player, player.goRight());
+    Interconnect::connect(handler, &ActionHandler::stepped<State::LeftWithItem, State::Left>, player, player.dropItem());
+    Interconnect::connect(handler, &ActionHandler::stepped<State::Right, State::Center>, player, player.goLeft());
+    Interconnect::connect(handler, &ActionHandler::stepped<State::Right, State::RightWithItem>, player, player.takeItem());
+    Interconnect::connect(handler, &ActionHandler::stepped<State::RightWithItem, State::CenterWithItem>, player, player.goLeft());
+    Interconnect::connect(handler, &ActionHandler::stepped<State::RightWithItem, State::Right>, player, player.saveItem());
+
     /* Configure camera */
     camera = new ColoringCamera(&scene);
 
@@ -64,7 +78,21 @@ void GameScreen::drawEvent() {
 void GameScreen::keyPressEvent(KeyEvent& event) {
     if(event.key() == KeyEvent::Key::Enter)
         application()->focusScreen(application<Application>()->bagScreen());
-    else return;
+    //else return;
+
+    switch(event.key()){
+        case KeyEvent::Key::Left:
+            handler.step(Input::LeftKey);
+            break;
+        case KeyEvent::Key::Right:
+            handler.step(Input::RightKey);
+            break;
+        case KeyEvent::Key::A:
+            handler.step(Input::ActionKey);
+            break;
+        default:
+            //do nothing
+    }
 
     event.setAccepted();
 }

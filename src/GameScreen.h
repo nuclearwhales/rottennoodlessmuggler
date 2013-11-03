@@ -8,6 +8,7 @@
 #include <SceneGraph/TranslationTransformation.h>
 #include <SceneGraph/Drawable.h>
 
+#include "Player.h"
 #include "Rotten.h"
 
 namespace Rotten {
@@ -16,6 +17,8 @@ enum class State: UnsignedByte {
     Center,
     Left,
     Right,
+    TakingItem,
+    DropingItem,
     CenterWithItem,
     LeftWithItem,
     RightWithItem
@@ -27,7 +30,7 @@ enum class Input: UnsignedByte {
     ActionKey
 };
 
-typedef Interconnect::StateMachine<6, 3, State, Input> ActionHandler;
+typedef Interconnect::StateMachine<8, 3, State, Input> ActionHandler;
 
 class ColoringCamera;
 
@@ -46,6 +49,7 @@ class GameScreen: public Platform::Screen {
         ColoringCamera* camera;
         SceneGraph::DrawableGroup2D drawables;
         ActionHandler handler;
+        Player player;
 };
 
 }
