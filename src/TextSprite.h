@@ -2,6 +2,7 @@
 #define Rotten_TextSprite_h
 
 #include <Buffer.h>
+#include <Color.h>
 #include <Mesh.h>
 #include <Resource.h>
 #include <SceneGraph/TranslationTransformation.h>
@@ -19,6 +20,16 @@ class TextSprite: public Object2D, SceneGraph::Drawable2D {
 
         ~TextSprite();
 
+        TextSprite& setBackgroundColor(const Color3& color) {
+            _backgroundColor = color;
+            return *this;
+        }
+
+        TextSprite& setColor(const Color3& color) {
+            _color = color;
+            return *this;
+        }
+
     private:
         void draw(const Matrix3& transformationMatrix, SceneGraph::AbstractCamera2D& camera) override;
 
@@ -26,6 +37,9 @@ class TextSprite: public Object2D, SceneGraph::Drawable2D {
         Buffer _indexBuffer, _vertexBuffer;
         Mesh _mesh;
         Resource<AbstractShaderProgram, Shaders::Vector2D> _shader;
+
+        Color3 _backgroundColor,
+            _color;
 };
 
 }

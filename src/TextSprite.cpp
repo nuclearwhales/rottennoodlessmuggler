@@ -8,7 +8,7 @@
 
 namespace Rotten {
 
-TextSprite::TextSprite(const std::string& text, Object2D* parent, SceneGraph::DrawableGroup2D* drawables): Object2D(parent), SceneGraph::Drawable2D(*this, drawables), _indexBuffer(Buffer::Target::ElementArray), _vertexBuffer(Buffer::Target::Array) {
+TextSprite::TextSprite(const std::string& text, Object2D* parent, SceneGraph::DrawableGroup2D* drawables): Object2D(parent), SceneGraph::Drawable2D(*this, drawables), _indexBuffer(Buffer::Target::ElementArray), _vertexBuffer(Buffer::Target::Array), _backgroundColor(0.6f), _color(0.0f) {
     auto font = Manager::instance().get<Text::AbstractFont>("font");
     _glyphCache = Manager::instance().get<Text::GlyphCache>("glyph-cache");
     _shader = Manager::instance().get<AbstractShaderProgram, Shaders::Vector2D>("text");
@@ -21,8 +21,8 @@ TextSprite::TextSprite(const std::string& text, Object2D* parent, SceneGraph::Dr
 TextSprite::~TextSprite() = default;
 
 void TextSprite::draw(const Matrix3& transformationMatrix, SceneGraph::AbstractCamera2D& camera) {
-    _shader->setBackgroundColor(Color3(0.6f))
-        .setColor(Color3(0.0f))
+    _shader->setBackgroundColor(_backgroundColor)
+        .setColor(_color)
         .setTransformationProjectionMatrix(camera.projectionMatrix()*transformationMatrix)
         .use();
     _glyphCache->texture().bind(Shaders::Vector2D::VectorTextureLayer);
