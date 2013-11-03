@@ -8,6 +8,7 @@
 
 namespace Rotten {
 
+using namespace Corrade; /* KDevelop workaround to make autocompletion working */
 using namespace Magnum;
 
 typedef SceneGraph::Object<SceneGraph::BasicTranslationTransformation2D<Float, Int>> Object2D;
