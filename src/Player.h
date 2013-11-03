@@ -1,5 +1,5 @@
-#ifndef PLAYER_H
-#define PLAYER_H
+#ifndef Rotten_Player_h
+#define Rotten_Player_h
 
 #include <Corrade/Interconnect/Receiver.h>
 
@@ -23,4 +23,4 @@ private:
 
 }
 
-#endif // PLAYER_H
+#endif
