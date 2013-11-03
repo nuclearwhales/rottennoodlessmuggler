@@ -17,4 +17,4 @@ Font HOWTO
 The current font is generated with `magnum-info`, you need also `FreeTypeFont`
 and `MagnumFontConverter` plugins.
 
-    magnum-fontconverter --font FreeTypeFont --converter MagnumFontConverter --atlas-size "100 100" --output-size "100 100" --radius 0 --font-size 8 sources/PressStart2P-Regular.ttf font
+    magnum-fontconverter --font FreeTypeFont --converter MagnumFontConverter --atlas-size "64 64" --output-size "64 64" --radius 0 --font-size 6 sources/PressStart2P-Regular.ttf font
