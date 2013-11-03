@@ -93,8 +93,7 @@ void GameScreen::keyPressEvent(KeyEvent& event) {
         case KeyEvent::Key::A:
             handler.step(Input::ActionKey);
             break;
-        default:
-            //do nothing
+        default: return;
     }
 
     event.setAccepted();
