@@ -29,6 +29,7 @@ set(Rotten_SRCS
     GameScreen.cpp
     Item.cpp
     MutableTextSprite.cpp
+    Player.cpp
     Rotten.cpp
     SplashScreen.cpp
     Sprite.cpp

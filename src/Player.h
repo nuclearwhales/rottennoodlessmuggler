@@ -7,18 +7,15 @@
 
 namespace Rotten {
 
-class Player: public Interconnect::Receiver{
+class Player: public Sprite, public Interconnect::Receiver {
+    public:
+        explicit Player(Object2D* parent, SceneGraph::DrawableGroup2D* drawables);
 
-public:
-    void goLeft();
-    void goRight();
-    void takeItem();
-    void saveItem();
-    void dropItem();
-
-private:
-    Sprite playerSprite;
-    Vector2 position;
+        void goLeft();
+        void goRight();
+        void takeItem();
+        void saveItem();
+        void dropItem();
 };
 
 }
