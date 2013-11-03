@@ -11,10 +11,7 @@ namespace Rotten {
 
 SplashScreen::SplashScreen() {
     /* Configure camera */
-    cameraObject = new Object2D(&scene);
-    camera = new ColoringCamera(*cameraObject);
-    camera->setProjection({160.0f, 144.0f})
-        .setViewport(defaultFramebuffer.viewport().size());
+    camera = new ColoringCamera(&scene);
 
     new TextSprite("Press START", &scene, &drawables);
 }

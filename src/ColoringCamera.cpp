@@ -72,7 +72,7 @@ void ColoringCamera::setup() {
         .set<AbstractShaderProgram>("coloring-shader", new ColoringShader);
 }
 
-ColoringCamera::ColoringCamera(Object2D& object): SceneGraph::Camera2D(object) {
+ColoringCamera::ColoringCamera(Object2D* parent): Object2D(parent), SceneGraph::Camera2D(*this) {
     _lookupTexture = Manager::instance().get<Texture2D>("coloring-lookup-texture");
     _texture = Manager::instance().get<Texture2D>("coloring-texture");
     _framebuffer = Manager::instance().get<Framebuffer>("coloring-framebuffer");

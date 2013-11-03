@@ -3,16 +3,18 @@
 
 #include <Resource.h>
 #include <SceneGraph/Camera2D.h>
+#include <SceneGraph/Object.h>
+#include <SceneGraph/TranslationTransformation.h>
 
 #include "Rotten.h"
 
 namespace Rotten {
 
-class ColoringCamera: public SceneGraph::Camera2D {
+class ColoringCamera: public Object2D, public SceneGraph::Camera2D {
     public:
         static void setup();
 
-        ColoringCamera(Object2D& object);
+        ColoringCamera(Object2D* parent);
 
         ~ColoringCamera();
 

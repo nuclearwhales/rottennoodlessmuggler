@@ -5,12 +5,13 @@
 #include <Platform/Sdl2Application.h>
 #include <SceneGraph/Scene.h>
 #include <SceneGraph/TranslationTransformation.h>
-#include <SceneGraph/Camera2D.h>
 #include <SceneGraph/Drawable.h>
 
 #include "Rotten.h"
 
 namespace Rotten {
+
+class ColoringCamera;
 
 class SplashScreen: public Platform::Screen {
     public:
@@ -24,8 +25,7 @@ class SplashScreen: public Platform::Screen {
         void keyPressEvent(KeyEvent& event);
 
         Scene2D scene;
-        Object2D* cameraObject;
-        SceneGraph::Camera2D* camera;
+        ColoringCamera* camera;
         SceneGraph::DrawableGroup2D drawables;
 };
 

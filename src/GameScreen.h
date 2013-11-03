@@ -6,7 +6,6 @@
 #include <Platform/Sdl2Application.h>
 #include <SceneGraph/Scene.h>
 #include <SceneGraph/TranslationTransformation.h>
-#include <SceneGraph/Camera2D.h>
 #include <SceneGraph/Drawable.h>
 
 #include "Rotten.h"
@@ -43,7 +42,6 @@ class GameScreen: public Platform::Screen {
         void drawEvent() override;
 
         Scene2D scene;
-        Object2D* cameraObject;
         ColoringCamera* camera;
         SceneGraph::DrawableGroup2D drawables;
         ActionHandler handler;
