@@ -15,9 +15,9 @@ include_directories(${MAGNUM_INCLUDE_DIRS}
     ${MAGNUM_APPLICATION_INCLUDE_DIRS}
     ${CMAKE_CURRENT_BINARY_DIR})
 
-corrade_add_resource(Rotten_Fonts_RCS ../artwork/fonts.conf)
-corrade_add_resource(Rotten_Shaders_RCS shaders.conf)
-corrade_add_resource(Rotten_Textures_RCS ../artwork/textures.conf)
+corrade_add_resource(Rotten_Fonts_RCS ../data/resources-fonts.conf)
+corrade_add_resource(Rotten_Shaders_RCS resources-shaders.conf)
+corrade_add_resource(Rotten_Textures_RCS ../data/resources-textures.conf)
 
 set(Rotten_SRCS
     Application.cpp
