@@ -1,7 +1,7 @@
 #ifndef Rotten_Player_h
 #define Rotten_Player_h
 
-#include <Corrade/Interconnect/Receiver.h>
+#include <Interconnect/Receiver.h>
 
 #include "Sprite.h"
 
