@@ -24,6 +24,7 @@ set(Rotten_SRCS
     ColoringCamera.cpp
     GameScreen.cpp
     Rotten.cpp
+    SplashScreen.cpp
     Sprite.cpp
     TextureLoader.cpp
     TextSprite.cpp

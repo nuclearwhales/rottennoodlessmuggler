@@ -31,7 +31,7 @@ void GameScreen::focusEvent() {
 }
 
 void GameScreen::blurEvent() {
-    setPropagatedEvents(PropagatedEvent::Draw);
+    setPropagatedEvents({});
 }
 
 void GameScreen::viewportEvent(const Vector2i& size) {

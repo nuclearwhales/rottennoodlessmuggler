@@ -17,6 +17,7 @@
 #include "GameScreen.h"
 #include "TextureLoader.h"
 #include "ColoringCamera.h"
+#include "SplashScreen.h"
 
 #include "configure.h"
 
@@ -46,6 +47,7 @@ class Application: public Platform::ScreenedApplication {
         PluginManager::Manager<Text::AbstractFont> fontManager;
         Manager resourceManager;
         std::unique_ptr<GameScreen> gameScreen;
+        std::unique_ptr<SplashScreen> splashScreen;
 };
 
 Application::Application(const Arguments& arguments): Platform::ScreenedApplication(arguments,
@@ -99,6 +101,8 @@ Application::Application(const Arguments& arguments): Platform::ScreenedApplicat
     ColoringCamera::setup();
 
     /* Screens */
+    splashScreen.reset(new SplashScreen);
+    addScreen(*splashScreen);
     gameScreen.reset(new GameScreen);
     addScreen(*gameScreen);
 }
