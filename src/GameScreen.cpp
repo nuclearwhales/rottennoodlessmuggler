@@ -30,6 +30,8 @@ GameScreen::GameScreen() {
     Interconnect::connect(handler, &MovementHandler::entered<PositionState::Right>, *player, &Player::goRight);
     Interconnect::connect(handler, &MovementHandler::exited<PositionState::Left>, *player, &Player::goRight);
     Interconnect::connect(handler, &MovementHandler::exited<PositionState::Right>, *player, &Player::goLeft);
+    Interconnect::connect(handler, &MovementHandler::entered<PositionState::Center>, *player, &Player::moveUp);
+    Interconnect::connect(handler, &MovementHandler::exited<PositionState::Center>, *player, &Player::moveDown);
 
     /* Configure camera */
     camera = new ColoringCamera(&scene);
@@ -69,9 +71,11 @@ void GameScreen::keyPressEvent(KeyEvent& event) {
             break;
         case KeyEvent::Key::Left:
             handler.step(PositionInput::LeftKey);
+            redraw();
             break;
         case KeyEvent::Key::Right:
             handler.step(PositionInput::RightKey);
+            redraw();
             break;
         case KeyEvent::Key::A:
             player->takeAction();

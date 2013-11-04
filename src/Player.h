@@ -15,6 +15,8 @@ class Player: public Sprite, public Interconnect::Receiver {
 
         void goLeft(PositionState);
         void goRight(PositionState);
+        void moveUp(PositionState);
+        void moveDown(PositionState);
         void takeAction();
 };
 
