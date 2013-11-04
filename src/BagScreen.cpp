@@ -17,9 +17,7 @@ BagScreen::BagScreen(): _current(-1) {
     camera = new ColoringCamera(&scene);
 
     /* TODO: debug code, please put dumpster diving in game screen */
-    Dumpster d(&scene, &drawables);
     _bag = new Bag(&scene, &drawables);
-    while(auto i = d.next()) _bag->put(i);
 
     (_itemCount = new MutableTextSprite(64, Text::Alignment::TopLeft, &scene, &drawables))
         ->setText("Bag:" + std::to_string(_bag->items().size()) + " items")
