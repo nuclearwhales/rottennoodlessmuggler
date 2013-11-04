@@ -44,6 +44,7 @@ void TextureLoader::doLoad(ResourceKey key) {
     #endif
     {
         Error() << "TextureLoader: image" << found->second << "isn't in greyscale format";
+        return setNotFound(key);
     }
 
     auto texture = new Texture2D;
