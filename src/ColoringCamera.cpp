@@ -35,7 +35,7 @@ void ColoringCamera::setup() {
         { 36,  35,  34}, /* Almost black */
         {137,  30,   7}, /* Dusty red */
         {163, 162, 161}, /* Light gray */
-        {239, 239, 239} /* Almost white */
+        {207, 207, 207}  /* Almost white */
     };
 
     /* Lookup texture */
