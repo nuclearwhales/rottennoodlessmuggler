@@ -27,6 +27,8 @@ class BagScreen: public Platform::Screen {
         void drawEvent() override;
         void keyPressEvent(KeyEvent& event) override;
 
+        void displayNextItem();
+        void displayPreviousItem();
         void displayItem(Int id);
 
         Scene2D scene;

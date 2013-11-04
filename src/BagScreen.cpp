@@ -35,7 +35,7 @@ BagScreen::BagScreen(): _current(-1) {
         ->setColor(Color3(0.3f))
         .translate({78, -70});
 
-    displayItem(0);
+    displayNextItem();
 }
 
 void BagScreen::focusEvent() {
@@ -56,9 +56,9 @@ void BagScreen::drawEvent() {
 
 void BagScreen::keyPressEvent(KeyEvent& event) {
     if(event.key() == KeyEvent::Key::Left)
-        displayItem((_current-1) % _bag->items().size());
+        displayPreviousItem();
     else if(event.key() == KeyEvent::Key::Right)
-        displayItem((_current+1) % _bag->items().size());
+        displayNextItem();
     else if(event.key() == KeyEvent::Key::Space)
         application()->focusScreen(application<Application>()->gameScreen());
     else return;
@@ -67,7 +67,17 @@ void BagScreen::keyPressEvent(KeyEvent& event) {
     redraw();
 }
 
+void BagScreen::displayNextItem() {
+    if(!_bag->items().empty()) displayItem((_current + 1) % _bag->items().size());
+}
+
+void BagScreen::displayPreviousItem() {
+    if(!_bag->items().empty()) displayItem((_current - 1) % _bag->items().size());
+}
+
 void BagScreen::displayItem(Int id) {
+    CORRADE_INTERNAL_ASSERT(id >= 0 && std::size_t(id) < _bag->items().size());
+
     /* Gosh this is fugly. */
 
     if(_current != -1)
