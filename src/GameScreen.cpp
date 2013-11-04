@@ -6,6 +6,7 @@
 
 #include "Application.h"
 #include "ColoringCamera.h"
+#include "Dumpster.h"
 #include "Sprite.h"
 #include "TextSprite.h"
 
@@ -52,10 +53,12 @@ GameScreen::GameScreen() {
     /* Configure camera */
     camera = new ColoringCamera(&scene);
 
-    /* Add some stuff */
-    (new Sprite(Vector2i(20), "box", &scene, &drawables))->translate({-40, -10});
-    (new Sprite(Vector2i(20), "mess", &scene, &drawables))->translate({0, 30});
-    (new Sprite(Vector2i(20), "strongbox", &scene, &drawables))->translate({40, -10});
+    /* Add dumpster */
+    dumpster = new Dumpster(&scene, &drawables);
+
+    /* Add some stuff to it */
+    dumpster->next();
+    dumpster->next();
 
     (new TextSprite("St: SHOW BAG", Text::Alignment::LineRight, &scene, &drawables))
         ->setColor(Color3(0.3f))

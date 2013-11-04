@@ -33,6 +33,7 @@ enum class Input: UnsignedByte {
 typedef Interconnect::StateMachine<8, 3, State, Input> ActionHandler;
 
 class ColoringCamera;
+class Dumpster;
 
 class GameScreen: public Platform::Screen {
     public:
@@ -49,6 +50,7 @@ class GameScreen: public Platform::Screen {
         ColoringCamera* camera;
         SceneGraph::DrawableGroup2D drawables;
         ActionHandler handler;
+        Dumpster* dumpster;
         Player* player;
 };
 

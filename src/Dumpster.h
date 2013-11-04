@@ -9,13 +9,18 @@ namespace Rotten {
 
 class Item;
 
-class Dumpster: public Sprite {
+class Dumpster: public Object2D {
     public:
         explicit Dumpster(Object2D* parent, SceneGraph::DrawableGroup2D* drawables);
 
-        Item* next();
+        bool next();
 
     private:
+        SceneGraph::DrawableGroup2D* _drawables;
+        const Vector2i _dumpsterPositions[3];
+        Sprite* _dumpsterSprites[3];
+        Item* _dumpsterItems[3];
+
         Utility::Configuration _conf;
         UnsignedInt _current;
 };
