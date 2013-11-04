@@ -43,12 +43,8 @@ class GameScreen: public Platform::Screen {
         Scene2D scene;
         ColoringCamera* camera;
         SceneGraph::DrawableGroup2D drawables;
-<<<<<<< Updated upstream
-        ActionHandler handler;
         Dumpster* dumpster;
-=======
         MovementHandler handler;
->>>>>>> Stashed changes
         Player* player;
 };
 
