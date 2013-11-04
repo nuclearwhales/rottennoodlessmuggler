@@ -42,6 +42,10 @@ void TextureLoader::doLoad(ResourceKey key) {
         Error() << "TextureLoader: with of image" << found->second << "is not divisible by 4";
         return setNotFound(key);
     }
+    if(image->size().y() % 2) {
+        Error() << "TextureLoader: height of image" << found->second << "is not even";
+        return setNotFound(key);
+    }
 
     #ifndef MAGNUM_TARGET_GLES
     if(image->format() != ColorFormat::Red || image->type() != ColorType::UnsignedByte)
