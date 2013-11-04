@@ -13,24 +13,18 @@
 
 namespace Rotten {
 
-enum class State: UnsignedByte {
+enum class PositionState: UnsignedByte {
     Center,
     Left,
-    Right,
-    TakingItem,
-    DropingItem,
-    CenterWithItem,
-    LeftWithItem,
-    RightWithItem
+    Right
 };
 
-enum class Input: UnsignedByte {
+enum class PositionInput: UnsignedByte {
     LeftKey,
-    RightKey,
-    ActionKey
+    RightKey
 };
 
-typedef Interconnect::StateMachine<8, 3, State, Input> ActionHandler;
+typedef Interconnect::StateMachine<3, 2, PositionState, PositionInput> MovementHandler;
 
 class ColoringCamera;
 class Dumpster;
@@ -49,8 +43,12 @@ class GameScreen: public Platform::Screen {
         Scene2D scene;
         ColoringCamera* camera;
         SceneGraph::DrawableGroup2D drawables;
+<<<<<<< Updated upstream
         ActionHandler handler;
         Dumpster* dumpster;
+=======
+        MovementHandler handler;
+>>>>>>> Stashed changes
         Player* player;
 };
 

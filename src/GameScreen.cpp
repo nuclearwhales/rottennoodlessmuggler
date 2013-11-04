@@ -19,36 +19,17 @@ GameScreen::GameScreen() {
 
     /* Configure state transitions of StateMachine handling input from player */
     handler.addTransitions({
-        {State::Center, Input::LeftKey, State::Left},
-        {State::Center, Input::RightKey, State::Right},
-        {State::Center, Input::ActionKey, State::CenterWithItem},
-        {State::CenterWithItem, Input::LeftKey, State::LeftWithItem},
-        {State::CenterWithItem, Input::RightKey, State::RightWithItem},
-        /*there is no action in center with item carried*/
-        {State::Left, Input::RightKey, State::Center},
-        {State::Left, Input::ActionKey, State::LeftWithItem},
-        {State::LeftWithItem, Input::RightKey, State::CenterWithItem},
-        {State::LeftWithItem, Input::ActionKey, State::Left}, //drop
-        {State::Right, Input::LeftKey, State::Center},
-        {State::Right, Input::ActionKey, State::RightWithItem},
-        {State::RightWithItem, Input::LeftKey, State::CenterWithItem},
-        {State::RightWithItem, Input::ActionKey, State::Right} //save item
+        {PositionState::Center, PositionInput::LeftKey, PositionState::Left},
+        {PositionState::Center, PositionInput::RightKey, PositionState::Right},
+        {PositionState::Left, PositionInput::RightKey, PositionState::Center},
+        {PositionState::Right, PositionInput::LeftKey, PositionState::Center},
     });
 
     /* Connect to player */
-    Interconnect::connect(handler, &ActionHandler::stepped<State::Center, State::Left>, *player, &Player::goLeft);
-    Interconnect::connect(handler, &ActionHandler::stepped<State::Center, State::Right>, *player, &Player::goRight);
-    Interconnect::connect(handler, &ActionHandler::stepped<State::Center, State::CenterWithItem>, *player, &Player::takeItem);
-    Interconnect::connect(handler, &ActionHandler::stepped<State::CenterWithItem, State::LeftWithItem>, *player, &Player::goLeft);
-    Interconnect::connect(handler, &ActionHandler::stepped<State::CenterWithItem, State::RightWithItem>, *player, &Player::goRight);
-    Interconnect::connect(handler, &ActionHandler::stepped<State::Left, State::Center>, *player, &Player::goRight);
-    Interconnect::connect(handler, &ActionHandler::stepped<State::Left, State::LeftWithItem>, *player, &Player::takeItem);
-    Interconnect::connect(handler, &ActionHandler::stepped<State::LeftWithItem, State::CenterWithItem>, *player, &Player::goRight);
-    Interconnect::connect(handler, &ActionHandler::stepped<State::LeftWithItem, State::Left>, *player, &Player::dropItem);
-    Interconnect::connect(handler, &ActionHandler::stepped<State::Right, State::Center>, *player, &Player::goLeft);
-    Interconnect::connect(handler, &ActionHandler::stepped<State::Right, State::RightWithItem>, *player, &Player::takeItem);
-    Interconnect::connect(handler, &ActionHandler::stepped<State::RightWithItem, State::CenterWithItem>, *player, &Player::goLeft);
-    Interconnect::connect(handler, &ActionHandler::stepped<State::RightWithItem, State::Right>, *player, &Player::saveItem);
+    Interconnect::connect(handler, &MovementHandler::entered<PositionState::Left>, *player, &Player::goLeft);
+    Interconnect::connect(handler, &MovementHandler::entered<PositionState::Right>, *player, &Player::goRight);
+    Interconnect::connect(handler, &MovementHandler::exited<PositionState::Left>, *player, &Player::goRight);
+    Interconnect::connect(handler, &MovementHandler::exited<PositionState::Right>, *player, &Player::goLeft);
 
     /* Configure camera */
     camera = new ColoringCamera(&scene);
@@ -87,13 +68,13 @@ void GameScreen::keyPressEvent(KeyEvent& event) {
             application()->focusScreen(application<Application>()->bagScreen());
             break;
         case KeyEvent::Key::Left:
-            handler.step(Input::LeftKey);
+            handler.step(PositionInput::LeftKey);
             break;
         case KeyEvent::Key::Right:
-            handler.step(Input::RightKey);
+            handler.step(PositionInput::RightKey);
             break;
         case KeyEvent::Key::A:
-            handler.step(Input::ActionKey);
+            player->takeAction();
             break;
         default: return;
     }
