@@ -57,9 +57,9 @@ GameScreen::GameScreen() {
     (new Sprite(Vector2i(20), "mess", &scene, &drawables))->translate({0, 30});
     (new Sprite(Vector2i(20), "strongbox", &scene, &drawables))->translate({40, -10});
 
-    (new TextSprite("St: SHOW BAG", &scene, &drawables))
+    (new TextSprite("St: SHOW BAG", Text::Alignment::LineRight, &scene, &drawables))
         ->setColor(Color3(0.3f))
-        .translate({30, -67});
+        .translate({78, -70});
 }
 
 void GameScreen::focusEvent() {

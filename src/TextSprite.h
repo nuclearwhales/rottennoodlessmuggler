@@ -9,6 +9,7 @@
 #include <SceneGraph/Drawable.h>
 #include <Shaders/Shaders.h>
 #include <Text/Text.h>
+#include <Text/Alignment.h>
 
 #include "Rotten.h"
 
@@ -16,7 +17,7 @@ namespace Rotten {
 
 class TextSprite: public Object2D, SceneGraph::Drawable2D {
     public:
-        explicit TextSprite(const std::string& text, Object2D* parent, SceneGraph::DrawableGroup2D* drawables = nullptr);
+        explicit TextSprite(const std::string& text, Text::Alignment alignment, Object2D* parent, SceneGraph::DrawableGroup2D* drawables = nullptr);
 
         ~TextSprite();
 

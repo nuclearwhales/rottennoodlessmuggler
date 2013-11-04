@@ -3,19 +3,17 @@
 #include <SceneGraph/AbstractCamera.h>
 #include <Shaders/Vector.h>
 #include <Text/AbstractFont.h>
-#include <Text/TextRenderer.h>
+#include <Text/Renderer.h>
 #include <Text/GlyphCache.h>
 
 namespace Rotten {
 
-TextSprite::TextSprite(const std::string& text, Object2D* parent, SceneGraph::DrawableGroup2D* drawables): Object2D(parent), SceneGraph::Drawable2D(*this, drawables), _indexBuffer(Buffer::Target::ElementArray), _vertexBuffer(Buffer::Target::Array), _backgroundColor(0.6f), _color(0.0f) {
+TextSprite::TextSprite(const std::string& text, Text::Alignment alignment, Object2D* parent, SceneGraph::DrawableGroup2D* drawables): Object2D(parent), SceneGraph::Drawable2D(*this, drawables), _indexBuffer(Buffer::Target::ElementArray), _vertexBuffer(Buffer::Target::Array), _backgroundColor(0.6f), _color(0.0f) {
     auto font = Manager::instance().get<Text::AbstractFont>("font");
     _glyphCache = Manager::instance().get<Text::GlyphCache>("glyph-cache");
     _shader = Manager::instance().get<AbstractShaderProgram, Shaders::Vector2D>("text");
 
-    Magnum::Rectangle rect; /* WINAPI I hate you. */
-    std::tie(_mesh, rect) = Text::TextRenderer2D::render(*font, *_glyphCache, 6.0f, text, _vertexBuffer, _indexBuffer, Buffer::Usage::StaticDraw);
-    translate(Vector2i(rect.size())/-2);
+    std::tie(_mesh, std::ignore) = Text::Renderer2D::render(*font, *_glyphCache, 6.0f, text, _vertexBuffer, _indexBuffer, Buffer::Usage::StaticDraw, alignment);
 }
 
 TextSprite::~TextSprite() = default;

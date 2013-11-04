@@ -7,6 +7,7 @@
 #include <SceneGraph/TranslationTransformation.h>
 #include <SceneGraph/Drawable.h>
 #include <Shaders/Shaders.h>
+#include <Text/Alignment.h>
 
 #include "Rotten.h"
 
@@ -14,7 +15,7 @@ namespace Rotten {
 
 class MutableTextSprite: public Object2D, SceneGraph::Drawable2D {
     public:
-        explicit MutableTextSprite(UnsignedInt capacity, Object2D* parent, SceneGraph::DrawableGroup2D* drawables = nullptr);
+        explicit MutableTextSprite(UnsignedInt capacity, Text::Alignment alignment, Object2D* parent, SceneGraph::DrawableGroup2D* drawables = nullptr);
 
         ~MutableTextSprite();
 
@@ -28,8 +29,6 @@ class MutableTextSprite: public Object2D, SceneGraph::Drawable2D {
             return *this;
         }
 
-        Rectanglei rectangle();
-
         MutableTextSprite& setText(const std::string& text);
 
     private:
@@ -37,7 +36,7 @@ class MutableTextSprite: public Object2D, SceneGraph::Drawable2D {
 
         Resource<Text::AbstractFont> _font;
         Resource<Text::GlyphCache> _glyphCache;
-        std::unique_ptr<Text::TextRenderer2D> _renderer;
+        std::unique_ptr<Text::Renderer2D> _renderer;
         Resource<AbstractShaderProgram, Shaders::Vector2D> _shader;
 
         Color3 _backgroundColor,

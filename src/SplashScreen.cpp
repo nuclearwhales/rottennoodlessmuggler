@@ -14,7 +14,7 @@ SplashScreen::SplashScreen() {
     /* Configure camera */
     camera = new ColoringCamera(&scene);
 
-    new TextSprite("Press START", &scene, &drawables);
+    new TextSprite("Press START", Text::Alignment::MiddleCenterIntegral, &scene, &drawables);
 }
 
 void SplashScreen::focusEvent() {

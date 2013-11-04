@@ -21,18 +21,19 @@ BagScreen::BagScreen(): _current(-1) {
     _bag = new Bag(&scene, &drawables);
     while(auto i = d.next()) _bag->put(i);
 
-    (_itemCount = new MutableTextSprite(64, &scene, &drawables))
+    (_itemCount = new MutableTextSprite(64, Text::Alignment::TopLeft, &scene, &drawables))
         ->setText("Bag:" + std::to_string(_bag->items().size()) + " items")
-        .translate({-78, 62});
-    _currentContents = new MutableTextSprite(64, &scene, &drawables);
+        .translate({-78, 70});
+    (_currentContents = new MutableTextSprite(64, Text::Alignment::MiddleCenterIntegral, &scene, &drawables))
+        ->translate(Vector2i::yAxis(-30));
 
-    (new TextSprite("Se: BACK", &scene, &drawables))
+    (new TextSprite("Se: BACK", Text::Alignment::LineLeft, &scene, &drawables))
         ->setColor(Color3(1.0f))
-        .translate({-47, -67});
+        .translate({-78, -70});
 
-    (new TextSprite("St: TRADE", &scene, &drawables))
+    (new TextSprite("St: TRADE", Text::Alignment::LineRight, &scene, &drawables))
         ->setColor(Color3(0.3f))
-        .translate({42, -67});
+        .translate({78, -70});
 
     displayItem(0);
 }
@@ -75,7 +76,6 @@ void BagScreen::displayItem(Int id) {
     drawables.add(*_bag->items()[id]);
     _bag->items()[id]->setTransformation({});
     _currentContents->setText(_bag->items()[id]->contents());
-    _currentContents->setTransformation({-_currentContents->rectangle().size().x()/2, -30});
 
     _current = id;
 }
