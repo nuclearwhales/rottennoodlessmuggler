@@ -37,6 +37,12 @@ void TextureLoader::doLoad(ResourceKey key) {
         return setNotFound(key);
     }
 
+    /* TODO: fix when glPixelStorei is implemented */
+    if(image->size().x() % 4) {
+        Error() << "TextureLoader: with of image" << found->second << "is not divisible by 4";
+        return setNotFound(key);
+    }
+
     #ifndef MAGNUM_TARGET_GLES
     if(image->format() != ColorFormat::Red || image->type() != ColorType::UnsignedByte)
     #else
