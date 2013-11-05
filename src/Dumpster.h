@@ -15,7 +15,7 @@ class Dumpster: public Object2D {
 
         bool next();
 
-        Item* item(Int index){return _dumpsterItems[index];}
+        bool item(Int index){return _dumpsterItems[index];}
 
         Item* take(Int index);
 

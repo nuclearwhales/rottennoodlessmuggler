@@ -15,7 +15,14 @@ namespace Rotten {
 GameScreen::GameScreen() {
     Renderer::setClearColor(Color3(0.66f));
 
-    player = new Player(&scene, &drawables);
+    /* Add dumpster */
+    dumpster = new Dumpster(&scene, &drawables);
+
+    /* Add some stuff to it */
+    dumpster->next();
+    dumpster->next();
+
+    player = new Player(dumpster,&scene, &drawables);
 
     /* Configure state transitions of StateMachine handling input from player */
     handler.addTransitions({
@@ -36,12 +43,7 @@ GameScreen::GameScreen() {
     /* Configure camera */
     camera = new ColoringCamera(&scene);
 
-    /* Add dumpster */
-    dumpster = new Dumpster(&scene, &drawables);
 
-    /* Add some stuff to it */
-    dumpster->next();
-    dumpster->next();
 
     (new Button(Button::Style::ActionB, "Done", &scene, &drawables))
         ->translate({-40, -66});
@@ -78,6 +80,7 @@ void GameScreen::keyPressEvent(KeyEvent& event) {
             break;
         case KeyEvent::Key::A:
             player->takeAction();
+            redraw();
             break;
         case KeyEvent::Key::B:
             application()->focusScreen(application<Application>()->bagScreen());
