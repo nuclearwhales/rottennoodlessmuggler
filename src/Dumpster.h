@@ -14,6 +14,7 @@ class Dumpster: public Object2D {
         explicit Dumpster(Object2D* parent, SceneGraph::DrawableGroup2D* drawables);
 
         bool next();
+        Item* item(Int index){return _dumpsterItems[index];}
 
     private:
         SceneGraph::DrawableGroup2D* _drawables;
