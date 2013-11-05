@@ -9,6 +9,7 @@
 #include "Dumpster.h"
 #include "Sprite.h"
 #include "Button.h"
+#include "MutableTextSprite.h"
 
 namespace Rotten {
 
@@ -45,9 +46,15 @@ GameScreen::GameScreen() {
 
 
 
+    /* UI */
+    (new MutableTextSprite(10, Text::Alignment::TopLeft, &scene, &drawables))
+        ->setText("0:38")
+        .translate({-78, 70});
+    (new MutableTextSprite(10, Text::Alignment::TopRight, &scene, &drawables))
+        ->setText("$150")
+        .translate({78, 70});
     (new Button(Button::Style::ActionB, "Done", &scene, &drawables))
         ->translate({-40, -66});
-
     (new Button(Button::Style::ActionA, "Take", &scene, &drawables))
         ->translate({40, -66});
 }
