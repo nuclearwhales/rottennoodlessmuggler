@@ -34,7 +34,7 @@ void Player::takeAction() {
             actualItem = levelDumpster->take(positionIndex);
             actualItem->drawables()->remove(*actualItem);
             actualItem->setParent(this);
-            reset({32,48},"smugglerWithItem");
+            reset({32,48},"smuggler-with-item");
         }
     } else {
         // throw or save item;
