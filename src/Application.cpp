@@ -1,9 +1,12 @@
 #include "Application.h"
 
+#include <ColorFormat.h>
 #include <DefaultFramebuffer.h>
 #include <Framebuffer.h>
+#include <ImageReference.h>
 #include <Mesh.h>
 #include <Texture.h>
+#include <TextureFormat.h>
 #include <MeshTools/Interleave.h>
 #include <Primitives/Square.h>
 #include <Shaders/Flat.h>
@@ -45,6 +48,19 @@ Application::Application(const Arguments& arguments): Platform::ScreenedApplicat
         std::exit(1);
     }
 
+    /* Fallback texture */
+    UnsignedByte black = 0;
+    auto texture = new Texture2D;
+    texture->setMinificationFilter(Sampler::Filter::Nearest)
+        .setMagnificationFilter(Sampler::Filter::Nearest)
+        .setWrapping(Sampler::Wrapping::ClampToEdge);
+
+    #ifndef MAGNUM_TARGET_GLES
+    texture->setImage(0, TextureFormat::Red, ImageReference2D(ColorFormat::Red, ColorType::UnsignedByte, Vector2i(1), &black));
+    #else
+    texture->setImage(0, TextureFormat::Luminance, ImageReference2D(ColorFormat::Luminance, ColorType::UnsignedByte, Vector2i(1), &black));
+    #endif
+
     /* Prepare the rectangle mesh */
     Trade::MeshData2D squareData = Primitives::Square::solid(Primitives::Square::TextureCoords::Generate);
     auto squareBuffer = new Buffer;
@@ -79,7 +95,8 @@ Application::Application(const Arguments& arguments): Platform::ScreenedApplicat
         .set<AbstractShaderProgram>("flat-textured", new Shaders::Flat2D(Shaders::Flat2D::Flag::Textured))
         .set<AbstractShaderProgram>("text", new Shaders::Vector2D)
         .set("square-buffer", squareBuffer)
-        .set("square", squareMesh);
+        .set("square", squareMesh)
+        .setFallback(texture);
 
     /* Prepare coloring camera */
     ColoringCamera::setup();

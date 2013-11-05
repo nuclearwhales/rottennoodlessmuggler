@@ -9,6 +9,7 @@
 #include "Item.h"
 #include "MutableTextSprite.h"
 #include "TextSprite.h"
+#include "Button.h"
 
 namespace Rotten {
 
@@ -25,13 +26,11 @@ BagScreen::BagScreen(): _current(-1) {
     (_currentContents = new MutableTextSprite(64, Text::Alignment::MiddleCenterIntegral, &scene, &drawables))
         ->translate(Vector2i::yAxis(-30));
 
-    (new TextSprite("Se: BACK", Text::Alignment::LineLeft, &scene, &drawables))
-        ->setColor(Color3(1.0f))
-        .translate({-78, -70});
+    (new Button(Button::Style::ActionB, "Back", &scene, &drawables))
+        ->translate({-40, -66});
 
-    (new TextSprite("St: TRADE", Text::Alignment::LineRight, &scene, &drawables))
-        ->setColor(Color3(0.3f))
-        .translate({78, -70});
+    (new Button(Button::Style::ActionA, "Trade", &scene, &drawables))
+        ->translate({40, -66});
 
     displayNextItem();
 }
@@ -57,7 +56,7 @@ void BagScreen::keyPressEvent(KeyEvent& event) {
         displayPreviousItem();
     else if(event.key() == KeyEvent::Key::Right)
         displayNextItem();
-    else if(event.key() == KeyEvent::Key::Space)
+    else if(event.key() == KeyEvent::Key::B)
         application()->focusScreen(application<Application>()->gameScreen());
     else return;
 

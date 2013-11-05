@@ -8,7 +8,7 @@
 #include "ColoringCamera.h"
 #include "Dumpster.h"
 #include "Sprite.h"
-#include "TextSprite.h"
+#include "Button.h"
 
 namespace Rotten {
 
@@ -43,9 +43,11 @@ GameScreen::GameScreen() {
     dumpster->next();
     dumpster->next();
 
-    (new TextSprite("St: SHOW BAG", Text::Alignment::LineRight, &scene, &drawables))
-        ->setColor(Color3(0.3f))
-        .translate({78, -70});
+    (new Button(Button::Style::ActionB, "Done", &scene, &drawables))
+        ->translate({-40, -66});
+
+    (new Button(Button::Style::ActionA, "Take", &scene, &drawables))
+        ->translate({40, -66});
 }
 
 void GameScreen::focusEvent() {
@@ -66,9 +68,6 @@ void GameScreen::drawEvent() {
 
 void GameScreen::keyPressEvent(KeyEvent& event) {
     switch(event.key()){
-        case KeyEvent::Key::Enter:
-            application()->focusScreen(application<Application>()->bagScreen());
-            break;
         case KeyEvent::Key::Left:
             handler.step(PositionInput::LeftKey);
             redraw();
@@ -79,6 +78,9 @@ void GameScreen::keyPressEvent(KeyEvent& event) {
             break;
         case KeyEvent::Key::A:
             player->takeAction();
+            break;
+        case KeyEvent::Key::B:
+            application()->focusScreen(application<Application>()->bagScreen());
             break;
         default: return;
     }

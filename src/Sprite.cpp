@@ -17,6 +17,9 @@ Sprite::Sprite(const Vector2i& size, const ResourceKey& texture, Object2D* paren
 }
 
 void Sprite::reset(const Vector2i& size, const ResourceKey& texture) {
+    /* Don't allow sprites with odd sizes */
+    CORRADE_INTERNAL_ASSERT((size%2).isZero());
+
     _size = size/2; /* Square texture is 2x2, thus halving the size */
     _texture = Manager::instance().get<Texture2D>(texture);
 }

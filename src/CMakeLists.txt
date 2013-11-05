@@ -24,6 +24,7 @@ set(Rotten_SRCS
     Application.cpp
     Bag.cpp
     BagScreen.cpp
+    Button.cpp
     ColoringCamera.cpp
     Dumpster.cpp
     GameScreen.cpp

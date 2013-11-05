@@ -37,6 +37,16 @@ void TextureLoader::doLoad(ResourceKey key) {
         return setNotFound(key);
     }
 
+    /* TODO: fix when glPixelStorei is implemented */
+    if(image->size().x() % 4) {
+        Error() << "TextureLoader: with of image" << found->second << "is not divisible by 4";
+        return setNotFound(key);
+    }
+    if(image->size().y() % 2) {
+        Error() << "TextureLoader: height of image" << found->second << "is not even";
+        return setNotFound(key);
+    }
+
     #ifndef MAGNUM_TARGET_GLES
     if(image->format() != ColorFormat::Red || image->type() != ColorType::UnsignedByte)
     #else
@@ -44,6 +54,7 @@ void TextureLoader::doLoad(ResourceKey key) {
     #endif
     {
         Error() << "TextureLoader: image" << found->second << "isn't in greyscale format";
+        return setNotFound(key);
     }
 
     auto texture = new Texture2D;
