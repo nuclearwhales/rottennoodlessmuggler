@@ -62,4 +62,15 @@ bool Dumpster::next() {
     return true;
 }
 
+Item* Dumpster::take(Int index) {
+    if(!_dumpsterItems[index]) return nullptr;
+
+    Item* i = _dumpsterItems[index];
+    _dumpsterItems[index] = nullptr;
+    _dumpsterSprites[index]->reset(dumpsterSpriteSize, "dumpster-off");
+
+    i->setParent(nullptr);
+    return i;
+}
+
 }
