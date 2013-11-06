@@ -26,6 +26,7 @@ enum class PositionInput: UnsignedByte {
 
 typedef Interconnect::StateMachine<3, 2, PositionState, PositionInput> MovementHandler;
 
+class Bag;
 class ColoringCamera;
 class Dumpster;
 
@@ -43,8 +44,10 @@ class GameScreen: public Platform::Screen {
         Scene2D scene;
         ColoringCamera* camera;
         SceneGraph::DrawableGroup2D drawables;
-        Dumpster* dumpster;
         MovementHandler handler;
+
+        Dumpster* dumpster;
+        Bag* bag;
         Player* player;
 };
 

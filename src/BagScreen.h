@@ -14,11 +14,14 @@ namespace Rotten {
 
 class Bag;
 class ColoringCamera;
+class Item;
 class MutableTextSprite;
 
 class BagScreen: public Platform::Screen {
     public:
         explicit BagScreen();
+
+        void viewBag(Bag* bag);
 
     private:
         void focusEvent() override;
@@ -30,12 +33,13 @@ class BagScreen: public Platform::Screen {
         void displayNextItem();
         void displayPreviousItem();
         void displayItem(Int id);
+        void thrash();
 
         Scene2D scene;
         ColoringCamera* camera;
         SceneGraph::DrawableGroup2D drawables;
 
-        Bag* _bag;
+        std::vector<Item*> _items;
         MutableTextSprite *_itemCount, *_currentContents;
         Int _current;
 };

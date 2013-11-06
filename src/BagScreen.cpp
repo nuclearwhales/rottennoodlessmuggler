@@ -17,21 +17,26 @@ BagScreen::BagScreen(): _current(-1) {
     /* Configure camera */
     camera = new ColoringCamera(&scene);
 
-    /* TODO: debug code, please put dumpster diving in game screen */
-    _bag = new Bag(&scene, &drawables);
-
     (_itemCount = new MutableTextSprite(64, Text::Alignment::TopLeft, &scene, &drawables))
-        ->setText("Bag:" + std::to_string(_bag->items().size()) + " items")
-        .translate({-78, 70});
+        ->translate({-78, 70});
     (_currentContents = new MutableTextSprite(64, Text::Alignment::MiddleCenterIntegral, &scene, &drawables))
         ->translate(Vector2i::yAxis(-30));
 
-    (new Button(Button::Style::ActionB, "Back", &scene, &drawables))
+    (new Button(Button::Style::ActionB, "Thrash", &scene, &drawables))
         ->translate({-40, -66});
-
     (new Button(Button::Style::ActionA, "Trade", &scene, &drawables))
         ->translate({40, -66});
+}
 
+void BagScreen::viewBag(Bag* bag) {
+    application()->focusScreen(*this);
+
+    /* Empty the bag */
+    _items = std::move(bag->items());
+    for(auto i: _items) i->setParent(&scene);
+
+    /* Display items */
+    _itemCount->setText("Bag:" + std::to_string(_items.size()) + " items");
     displayNextItem();
 }
 
@@ -57,7 +62,7 @@ void BagScreen::keyPressEvent(KeyEvent& event) {
     else if(event.key() == KeyEvent::Key::Right)
         displayNextItem();
     else if(event.key() == KeyEvent::Key::B)
-        application()->focusScreen(application<Application>()->gameScreen());
+        thrash();
     else return;
 
     event.setAccepted();
@@ -65,26 +70,36 @@ void BagScreen::keyPressEvent(KeyEvent& event) {
 }
 
 void BagScreen::displayNextItem() {
-    if(!_bag->items().empty()) displayItem((_current + 1) % _bag->items().size());
+    if(!_items.empty()) displayItem((_current + 1) % _items.size());
+    else _currentContents->setText("");
 }
 
 void BagScreen::displayPreviousItem() {
-    if(!_bag->items().empty()) displayItem((_current - 1) % _bag->items().size());
+    if(!_items.empty()) displayItem((_current - 1) % _items.size());
+    else _currentContents->setText("");
 }
 
 void BagScreen::displayItem(Int id) {
-    CORRADE_INTERNAL_ASSERT(id >= 0 && std::size_t(id) < _bag->items().size());
+    CORRADE_INTERNAL_ASSERT(id >= 0 && std::size_t(id) < _items.size());
 
     /* Gosh this is fugly. */
+    if(_current != -1 && _items[_current]->drawables())
+        _items[_current]->drawables()->remove(*_items[_current]);
 
-    if(_current != -1)
-        _bag->items()[_current]->drawables()->remove(*_bag->items()[_current]);
-
-    drawables.add(*_bag->items()[id]);
-    _bag->items()[id]->setTransformation({});
-    _currentContents->setText(_bag->items()[id]->contents());
+    drawables.add(*_items[id]);
+    _currentContents->setText(_items[id]->contents());
 
     _current = id;
+}
+
+void BagScreen::thrash() {
+    if(_current == -1) return;
+
+    delete _items[_current];
+    _items.erase(_items.begin() + _current);
+    --_current;
+    _itemCount->setText("Bag:" + std::to_string(_items.size()) + " items");
+    displayNextItem();
 }
 
 }

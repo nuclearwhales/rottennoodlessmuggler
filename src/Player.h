@@ -7,24 +7,27 @@
 
 namespace Rotten {
 
-class Item;
-
+class Bag;
 class Dumpster;
+class Item;
 
 enum class PositionState: UnsignedByte;
 
 class Player: public Sprite, public Interconnect::Receiver {
     public:
-        explicit Player(Dumpster* levelDumpster,Object2D* parent, SceneGraph::DrawableGroup2D* drawables);
+        explicit Player(Bag* bag, Dumpster* levelDumpster, Object2D* parent, SceneGraph::DrawableGroup2D* drawables);
 
         void goLeft(PositionState);
         void goRight(PositionState);
         void moveUp(PositionState);
         void moveDown(PositionState);
-        void takeAction();
+
+        void grab();
+        void save();
 
     private:
-        Dumpster* levelDumpster;
+        Bag* bag;
+        Dumpster* dumpster;
         Item* actualItem=nullptr;
         Int positionIndex=1;
 };

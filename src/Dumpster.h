@@ -19,6 +19,8 @@ class Dumpster: public Object2D {
 
         Item* take(Int index);
 
+        void put(Int index, Item* item);
+
     private:
         SceneGraph::DrawableGroup2D* _drawables;
         const Vector2i _dumpsterPositions[3];

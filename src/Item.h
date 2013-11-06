@@ -9,7 +9,7 @@ class Item: public Sprite {
     friend class Dumpster;
 
     public:
-        explicit Item(Object2D* parent, SceneGraph::DrawableGroup2D* drawables);
+        explicit Item(Object2D* parent, SceneGraph::DrawableGroup2D* drawables = nullptr);
 
         ~Item();
 

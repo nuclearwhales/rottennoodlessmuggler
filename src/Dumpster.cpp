@@ -47,7 +47,7 @@ bool Dumpster::next() {
     CORRADE_INTERNAL_ASSERT(imageData);
 
     /* Populate the item */
-    auto item = new Item(this, _drawables);
+    auto item = new Item(this);
     item->reset(imageData->value<Vector2i>("size"), imageData->value("file"));
     item->_contents = itemData->value("contents");
     item->_size = itemData->value<Int>("size");
@@ -56,21 +56,32 @@ bool Dumpster::next() {
     /* Move to next item in the dumpster (nothing fancy now, just sequential) */
     ++_current;
 
-    /* Add the item to proper dumpster */
-    (_dumpsterItems[empty] = item)->setTransformation(_dumpsterPositions[empty]);
-    _dumpsterSprites[empty]->reset(dumpsterSpriteSize, "dumpster-on");
+    put(empty, item);
     return true;
 }
 
 Item* Dumpster::take(Int index) {
-    if(!_dumpsterItems[index]) return nullptr;
+    CORRADE_INTERNAL_ASSERT(_dumpsterItems[index]);
 
     Item* i = _dumpsterItems[index];
+    i->drawables()->remove(*i);
+    i->setParent(nullptr);
+
     _dumpsterItems[index] = nullptr;
     _dumpsterSprites[index]->reset(dumpsterSpriteSize, "dumpster-off");
 
-    i->setParent(nullptr);
     return i;
+}
+
+void Dumpster::put(Int index, Item* i) {
+    CORRADE_INTERNAL_ASSERT(!_dumpsterItems[index]);
+
+    i->setTransformation(_dumpsterPositions[index]);
+    i->setParent(this);
+    _drawables->add(*i);
+
+    _dumpsterItems[index] = i;
+    _dumpsterSprites[index]->reset(dumpsterSpriteSize, "dumpster-on");
 }
 
 }

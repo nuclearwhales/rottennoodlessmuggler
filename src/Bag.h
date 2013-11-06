@@ -13,9 +13,9 @@ class Bag: public Sprite {
 
         ~Bag();
 
-        void put(Item* item);
+        bool put(Item* item);
 
-        const std::vector<Item*>& items() const { return _items; }
+        std::vector<Item*>& items() { return _items; }
 
     private:
         std::vector<Item*> _items;

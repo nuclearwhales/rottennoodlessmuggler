@@ -10,6 +10,8 @@
 #include "Sprite.h"
 #include "Button.h"
 #include "MutableTextSprite.h"
+#include "Bag.h"
+#include "BagScreen.h"
 
 namespace Rotten {
 
@@ -22,8 +24,13 @@ GameScreen::GameScreen() {
     /* Add some stuff to it */
     dumpster->next();
     dumpster->next();
+    dumpster->next();
 
-    player = new Player(dumpster,&scene, &drawables);
+    /* Add bag */
+    (bag = new Bag(&scene, &drawables))
+        ->translate(Vector2i::yAxis(-43));
+
+    player = new Player(bag, dumpster, &scene, &drawables);
 
     /* Configure state transitions of StateMachine handling input from player */
     handler.addTransitions({
@@ -44,8 +51,6 @@ GameScreen::GameScreen() {
     /* Configure camera */
     camera = new ColoringCamera(&scene);
 
-
-
     /* UI */
     (new MutableTextSprite(10, Text::Alignment::TopLeft, &scene, &drawables))
         ->setText("0:38")
@@ -53,9 +58,7 @@ GameScreen::GameScreen() {
     (new MutableTextSprite(10, Text::Alignment::TopRight, &scene, &drawables))
         ->setText("$150")
         .translate({78, 70});
-    (new Button(Button::Style::ActionB, "Done", &scene, &drawables))
-        ->translate({-40, -66});
-    (new Button(Button::Style::ActionA, "Take", &scene, &drawables))
+    (new Button(Button::Style::ActionA, "Done", &scene, &drawables))
         ->translate({40, -66});
 }
 
@@ -85,12 +88,16 @@ void GameScreen::keyPressEvent(KeyEvent& event) {
             handler.step(PositionInput::RightKey);
             redraw();
             break;
-        case KeyEvent::Key::A:
-            player->takeAction();
+        case KeyEvent::Key::Up:
+            player->grab();
             redraw();
             break;
-        case KeyEvent::Key::B:
-            application()->focusScreen(application<Application>()->bagScreen());
+        case KeyEvent::Key::Down:
+            player->save();
+            redraw();
+            break;
+        case KeyEvent::Key::A:
+            static_cast<BagScreen&>(application<Application>()->bagScreen()).viewBag(bag);
             break;
         default: return;
     }
